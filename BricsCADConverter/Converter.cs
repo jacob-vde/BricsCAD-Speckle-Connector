@@ -40,7 +40,7 @@ namespace BricsCADConverter
 
     public bool CanConvertToNative(Base @object)
     {
-      Doc.Editor.WriteMessage("Checking if we can convert to Native: " + @object);
+      Doc.Editor.WriteMessage("\n    Checking if we can convert to Native: " + @object);
       return false;
     }
 

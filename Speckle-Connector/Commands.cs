@@ -34,9 +34,23 @@ namespace BSC // BricsCAD Speckle Connector
             var editor = Application.DocumentManager.MdiActiveDocument.Editor;
             editor.WriteMessage("\nSending data to speckle");
             //_OdDb.Database db = _OdDb.HostApplicationServices.WorkingDatabase;Z
+            
+            // Get the default speckle kit
+            var kit = KitManager.GetDefaultKit();
+            editor.WriteMessage("\nFound kit: " + kit.Name);
 
+            // There should only be one available converter for bricscad right now
+            var converter = kit.LoadConverter("BricsCAD");
+            // Pass the current document to the converter
+            converter.SetContextDocument(Application.DocumentManager.MdiActiveDocument);
+            editor.WriteMessage("\nLoaded converter: " + converter);
+            
+            // Convert some objects, maybe the current selection?
+            // var baseObject = converter.ConvertToNative(someObjectFromBRICS)
+            
+            // Send them to speckle!! TBD
         }
-
+        
         [_OdRx.CommandMethod("SpeckleReceive")]
         public static void ReceiveSpeckleData()
         {
@@ -52,51 +66,56 @@ namespace BSC // BricsCAD Speckle Connector
             
             // Get the default speckle kit
             var kit = KitManager.GetDefaultKit();
-            editor.WriteMessage("Found kit: " + kit.Name);
+            editor.WriteMessage("\nFound kit: " + kit.Name);
 
             // There should only be one available converter for bricscad right now
             var converter = kit.LoadConverter("BricsCAD");
-            editor.WriteMessage("Loaded converter: " + converter);
+            // Pass the current document to the converter
+            converter.SetContextDocument(Application.DocumentManager.MdiActiveDocument);
+            editor.WriteMessage("\nLoaded converter: " + converter);
             
             // Wrapped this in a task bc it was freezing the main thread
             Task.Run(() =>
             {
-                // Get default account on this machine
-                // If you don't have Speckle Manager installed download it from https://speckle-releases.netlify.app
-                var defaultAccount = AccountManager.GetDefaultAccount();
-                // Or get all the accounts and manually choose the one you want
-                // var accounts = AccountManager.GetAccounts();
-                // var defaultAccount = accounts.ToList().FirstOrDefault();
+                try
+                {
+                    // Get default account on this machine
+                    // If you don't have Speckle Manager installed download it from https://speckle-releases.netlify.app
+                    var defaultAccount = AccountManager.GetDefaultAccount();
+                    // Or get all the accounts and manually choose the one you want
+                    // var accounts = AccountManager.GetAccounts();
+                    // var defaultAccount = accounts.ToList().FirstOrDefault();
 
-                // Authenticate using the account
-                var client = new Client(defaultAccount);
-
-
-                // Now we can start using the client
-
-
-                // Get the main branch with it's latest commit reference
-                var branch = client.BranchGet(streamId, "main", 1).Result;
-                // Get the id of the object referenced in the commit
-                var hash = branch.commits.items[0].referencedObject;
+                    // Authenticate using the account
+                    var client = new Client(defaultAccount);
 
 
-                // Create the server transport for the specified stream.
-                var transport = new ServerTransport(defaultAccount, streamId);
-                // Receive the object
-                var receivedBase = Operations.Receive(hash, transport).Result;
+                    // Now we can start using the client
+                    
+                    // Get the main branch with it's latest commit reference
+                    var branch = client.BranchGet(streamId, branchName, 1).Result;
+                    // Get the id of the object referenced in the commit
+                    var hash = branch.commits.items[0].referencedObject;
 
-                
-                editor.WriteMessage("Finished receiving data:");
-                
-                // You can flatten the object you received and only get the inner children that are convertible
-                var convertibleObjects = receivedBase.Flatten(converter.CanConvertToNative);
-                
-                // Then run the conversion on them.
-                var converted = converter.ConvertToNative(convertibleObjects);
-                
-                editor.WriteMessage("Finished converting data:");
 
+                    // Create the server transport for the specified stream.
+                    var transport = new ServerTransport(defaultAccount, streamId);
+                    // Receive the object
+                    var receivedBase = Operations.Receive(hash, transport).Result;
+
+
+                    editor.WriteMessage("\nFinished receiving data:");
+
+                    // You can flatten the object you received and only get the inner children that are convertible
+                    var convertibleObjects = receivedBase.Flatten(converter.CanConvertToNative);
+
+                    editor.WriteMessage("\nConvertible objects: " + convertibleObjects.Count);
+
+                }
+                catch (Exception e)
+                {
+                    editor.WriteMessage("\n" + e.ToFormattedString());
+                }
             });
         }
     }
