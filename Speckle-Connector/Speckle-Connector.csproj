@@ -73,6 +73,8 @@
       <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_MgdDbConstraints.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
@@ -80,6 +82,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\speckle-sharp\Core\Core\Core.csproj">
+      <Project>{88ee5f99-954d-4687-90ae-69f532b3b006}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <None Include="UI\res\Speckle-BricsCAD-Connector.cui" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

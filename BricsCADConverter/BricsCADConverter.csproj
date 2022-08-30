@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <RootNamespace>BricsCADConverter</RootNamespace>
+        <LangVersion>9.0</LangVersion>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Objects.Converter.BricsCAD</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Properties\**" />
+      <EmbeddedResource Remove="Properties\**" />
+      <None Remove="Properties\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\speckle-sharp\Core\Core\Core.csproj" />
+      <ProjectReference Include="..\..\speckle-sharp\Objects\Objects\Objects.csproj" />
+
+        <Reference Include="BrxMgd">
+            <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\BrxMgd.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="TD_Mgd">
+            <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_Mgd.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="TD_MgdBrep">
+            <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_MgdBrep.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="TD_MgdDbConstraints">
+            <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_MgdDbConstraints.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+    
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Condition="$([MSBuild]::IsOsPlatform('Windows'))" Command="xcopy /Y /S &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(AppData)\Speckle\Kits\Objects\&quot;" />
+        <Exec Condition="$([MSBuild]::IsOsPlatform('OSX'))" Command="mkdir $HOME'/.config/Speckle/Kits/CustomObjects/' &amp; cp '$(TargetDir)$(AssemblyName).dll' $HOME'/.config/Speckle/Kits/Objects/'" />
+    </Target>
+</Project>
