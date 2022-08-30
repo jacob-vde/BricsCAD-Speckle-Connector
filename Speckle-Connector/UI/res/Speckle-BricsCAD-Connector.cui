@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<CustSection xml:lang="en-US">
+  <MenuGroup Name="Speckle">
+    <MacroGroup Name="Speckle">
+      <MenuMacro UID="specklesend">
+        <Macro>
+          <Name>Speckle Send</Name>
+          <Command>^c^c_specklesend</Command>
+          <HelpString>Send Speckle data</HelpString>
+          <Image ID="ssend.png"/></Macro>
+      </MenuMacro>
+      <MenuMacro UID="specklereceive">
+        <Macro>
+          <Name>Speckle Receive</Name>
+          <Command>^c^c_specklereceive</Command>
+          <HelpString>Receive Speckle data</HelpString>
+          <Image ID="sreceive.png"/>
+        </Macro>
+      </MenuMacro>
+    </MacroGroup>
+    <MenuRoot>
+      <PopMenuRoot>
+        <PopMenu UID="mnSpeckle">
+          <Alias>Speckle</Alias>
+          <Name>&amp;Speckle</Name>
+          <PopMenuItem>
+            <NameRef>&amp;Speckle Send</NameRef>
+            <MenuItem>
+              <MacroRef MenuMacroID="specklesend"/>
+            </MenuItem>
+          </PopMenuItem>
+          <PopMenuItem>
+            <NameRef>&amp;Speckle Receive</NameRef>
+            <MenuItem>
+              <MacroRef MenuMacroID="specklereceive"/>
+            </MenuItem>
+          </PopMenuItem>
+        </PopMenu>
+      </PopMenuRoot>
+      <RibbonRoot>
+        <RibbonTabSourceCollection>
+          <RibbonTabSource Text="Speckle" UID="Speckle-BricsCAD">
+            <Name>Speckle</Name>
+            <RibbonPanelSourceReference PanelId="Speckle-BricsCAD"/>
+          </RibbonTabSource>
+        </RibbonTabSourceCollection>
+        <RibbonPanelSourceCollection>
+          <RibbonPanelSource Text="Speckle" UID="Speckle-BricsCAD">
+            <Name>Speckle</Name>
+            <RibbonRow>
+              <RibbonCommandButton ButtonStyle="LargeWithText" MenuMacroID="specklesend" Text="Speckle Send"/>
+              <RibbonCommandButton ButtonStyle="LargeWithText" MenuMacroID="specklereceive" Text="Speckle Receive"/>
+            </RibbonRow>
+          </RibbonPanelSource>        
+        </RibbonPanelSourceCollection>
+      </RibbonRoot>
+      <MouseButtonRoot/>
+      <DoubleClickRoot/>
+      <DigitizerButtonRoot/>
+      <TabletMenuRoot/>
+      <ToolbarRoot>
+        <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" UID="tbSpeckle-BricsCAD" rows="1">
+          <Alias>TB_Speckle-BricsCAD</Alias>
+          <Name>Speckle</Name>
+          <ToolbarButton>
+            <Name>Speckle Send</Name>
+            <MenuItem>
+              <MacroRef MenuMacroID="specklesend"/>
+            </MenuItem>
+          </ToolbarButton>
+          <ToolbarButton>
+            <Name>Speckle Send</Name>
+            <MenuItem>
+              <MacroRef MenuMacroID="specklereceive"/>
+            </MenuItem>
+          </ToolbarButton>
+        </Toolbar>
+      </ToolbarRoot>
+    </MenuRoot>
+  </MenuGroup>
+</CustSection>
