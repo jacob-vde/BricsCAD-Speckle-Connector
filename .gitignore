@@ -1,0 +1,20 @@
+﻿# MacOS
+.DS_Store
+
+### vs ###
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.vshistory/
+
+*/bin
+*/obj
+*/lib
+*/build
+*.aps
