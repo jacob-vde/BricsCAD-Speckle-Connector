@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BrxMgd">
-      <HintPath>[BCAD INSTALLATION FOLDER]\BrxMgd.dll</HintPath>
+      <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\BrxMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -44,21 +44,29 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="TD_Mgd">
-      <HintPath>[BCAD INSTALLATION FOLDER]\TD_Mgd.dll</HintPath>
+      <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_Mgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="TD_MgdBrep">
-      <HintPath>[BCAD INSTALLATION FOLDER]\TD_MgdBrep.dll</HintPath>
+      <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_MgdBrep.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="TD_MgdDbConstraints">
-      <HintPath>[BCAD INSTALLATION FOLDER]\TD_MgdDbConstraints.dll</HintPath>
+      <HintPath>C:\Program Files\Bricsys\BricsCAD V22 en_US\TD_MgdDbConstraints.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\speckle-sharp\Core\Core\Core.csproj">
+      <Project>{88ee5f99-954d-4687-90ae-69f532b3b006}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

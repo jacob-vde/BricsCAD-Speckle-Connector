@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speckle-Connector", "Speckle-Connector\Speckle-Connector.csproj", "{593960EF-7EA0-4E06-9C44-9CF1C48DE0D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\speckle-sharp\Core\Core\Core.csproj", "{88EE5F99-954D-4687-90AE-69F532B3B006}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Objects", "..\speckle-sharp\Objects\Objects\Objects.csproj", "{D3C3A886-AE4B-4796-B434-E6E7829B9623}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BricsCADConverter", "BricsCADConverter\BricsCADConverter.csproj", "{38914618-4189-424F-84A9-2E5B0FDC2D4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{593960EF-7EA0-4E06-9C44-9CF1C48DE0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{593960EF-7EA0-4E06-9C44-9CF1C48DE0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{593960EF-7EA0-4E06-9C44-9CF1C48DE0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88EE5F99-954D-4687-90AE-69F532B3B006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88EE5F99-954D-4687-90AE-69F532B3B006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88EE5F99-954D-4687-90AE-69F532B3B006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88EE5F99-954D-4687-90AE-69F532B3B006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C3A886-AE4B-4796-B434-E6E7829B9623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C3A886-AE4B-4796-B434-E6E7829B9623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C3A886-AE4B-4796-B434-E6E7829B9623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C3A886-AE4B-4796-B434-E6E7829B9623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38914618-4189-424F-84A9-2E5B0FDC2D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38914618-4189-424F-84A9-2E5B0FDC2D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38914618-4189-424F-84A9-2E5B0FDC2D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38914618-4189-424F-84A9-2E5B0FDC2D4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
