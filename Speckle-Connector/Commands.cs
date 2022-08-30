@@ -74,7 +74,7 @@ namespace BSC // BricsCAD Speckle Connector
                     // Create the server transport for the specified stream.
                     var transport = new ServerTransport(defaultAccount, streamId);
 
-                    editor.WriteMessage($"Starting to send data to stream {streamId} and branch {branchName}");
+                    editor.WriteMessage($"\nStarting to send data to stream {streamId} and branch {branchName}");
 
                     // Sending the object will return it's unique identifier.
                     var newHash = Operations.Send(baseObject, new List<ITransport> { transport }).Result;
