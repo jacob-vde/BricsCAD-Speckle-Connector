@@ -7,3 +7,4 @@ Testing:
 - Open BricsCad
 - in BCad type NETLOAD
 - select previously build Speckle-Connector.dll
+- You should now be able to type commands specklesend and specklereceive in BricsCAD
