@@ -161,7 +161,7 @@ namespace BSC // BricsCAD Speckle Connector
                     editor.WriteMessage("\nFinished receiving data:");
 
                     // You can flatten the object you received and only get the inner children that are convertible
-                    var convertibleObjects = receivedBase.Flatten(converter.CanConvertToNative);
+                    var convertibleObjects = receivedBase.Flatten(converter.CanConvertToNative).Where(converter.CanConvertToNative);
 
                     editor.WriteMessage($"\nConvertible objects: {convertibleObjects.Count}");
                 }
