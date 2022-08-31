@@ -42,7 +42,7 @@ namespace BSC // BricsCAD Speckle Connector
                 {
                     editor.WriteMessage("\nStarted");
                     // The stream you want to send to
-                    var streamId = "259163bc08";
+                    var streamId = "09cc3e75ed";
                     // The name of the branch we'll send data to.
                     var branchName = "main";
 
@@ -59,7 +59,7 @@ namespace BSC // BricsCAD Speckle Connector
                     // Convert some objects, maybe the current selection?
                     // var baseObject = converter.ConvertToNative(someObjectFromBRICS)
 
-                    // TODO: We use a custom object for now
+                    // TODO: We use a dummy object for now
                     var baseObject = new Base();
                     baseObject["fromBRICS"] = "This comes from BRICSCAD!!!";
                     // Send them to speckle!! TBD
@@ -159,21 +159,21 @@ namespace BSC // BricsCAD Speckle Connector
                     editor.WriteMessage("\nFinished collecting data");
 
                     // You can flatten the object you received and only get the inner children that are convertible
+                    // TODO use starting from release 2.8
                     /*var speckleObjects = receivedBase.Flatten(converter.CanConvertToNative).Where(converter.CanConvertToNative);
                     editor.WriteMessage($"\nConvertible objects: {speckleObjects.Count()}");*/
 
                     // flatten the commit object to retrieve children objs
                     int count = 0;
-                    var commitObjs = FlattenCommitObject(receivedBase, converter, ref count).Where(converter.CanConvertToNative);
+                    IEnumerable<Base> commitObjs = FlattenCommitObject(receivedBase, converter, ref count).Where(converter.CanConvertToNative);
 
                     using (DocumentLock docLock = doc.LockDocument(DocumentLockMode.ProtectedAutoWrite, "SPECKLERECEIVE", "SPECKLERECEIVE", false))
                     {
                         List<object> BcObjects = converter.ConvertToNative(commitObjs.ToList<Base>());
                         AppendObjectsToDatabase(BcObjects, doc.Database, false);
                     }
-                    
-                    // TODO add BcObjects to contextDocument
 
+                    editor.WriteMessage("\nDone converting");
                     // Remember to dispose of the client once you've finished with it.
                     client.Dispose();
                 }
@@ -185,6 +185,7 @@ namespace BSC // BricsCAD Speckle Connector
             });
         }
 
+        // TODO use until release 2.8 instead of receivedBase.Flatten(converter.CanConvertToNative);
         // Copied & modified from Speckle-Sharp repo 
         private static List<Base> FlattenCommitObject(object obj, ISpeckleConverter converter, ref int count, bool foundConvertibleMember = false)
         {

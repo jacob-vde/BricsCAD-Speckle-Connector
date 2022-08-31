@@ -35,7 +35,7 @@ namespace BricsCADConverter
   {
     public string Description => "BricsCAD Converter";
     public string Name => "BricsCAD Converter";
-    public string Author => "The BricsCAD Peeps)";
+    public string Author => "Bricsys nv.";
     public string WebsiteOrEmail => "https://github.com/jacob-vde/BricsCAD-Speckle-Connector";
     public ProgressReport Report { get; private set; } = new ProgressReport();
     public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.Create;
@@ -112,10 +112,13 @@ namespace BricsCADConverter
                     break;
 
 
-                /*                case Brep o:
-                                    bcadObj = (o.displayMesh != null) ? MeshToNativeDB(o.displayMesh) : null;
-                                    Report.Log($"Created Brep {o.id} as Mesh");
-                                    break;*/
+                case Brep o:
+                    if (o.displayValue != null && o.displayValue.Count > 0)
+                    {
+                        bcadObj = GeomConverter.MeshToNativeDB(o.displayValue[0]);
+                        Report.Log($"Created Brep {o.id} as Mesh");
+                    }
+                    break;
 
 
                 case Mesh o:
@@ -183,8 +186,8 @@ namespace BricsCADConverter
         case Polyline _:
         case Polycurve _:
         case Curve _:
-        // case Brep _:
-        // case Mesh _:
+        case Brep _:
+        case Mesh _:
         // case Dimension _:
         // case BlockDefinition _:
         // case BlockInstance _:

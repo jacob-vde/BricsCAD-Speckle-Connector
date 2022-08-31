@@ -171,7 +171,7 @@ namespace BricsCADConverter
             return polyline;
         }
 
-        public _OdDb.PolyFaceMesh MeshToNativeDB(Mesh mesh)
+        public _OdDb.SubDMesh MeshToNativeDB(Mesh mesh)
         {
             mesh.TriangulateMesh(true);
 
@@ -181,72 +181,13 @@ namespace BricsCADConverter
             foreach (var point in points)
                 vertices.Add(point);
 
-            _OdDb.PolyFaceMesh _mesh = null;
-            var doc = Application.DocumentManager.MdiActiveDocument;
-            using (_OdDb.Transaction transaction = doc.TransactionManager.StartTransaction())
-            {
-                _mesh = new _OdDb.PolyFaceMesh();
-                _mesh.SetDatabaseDefaults();
+            var faceArray = new _OdGe.Int32Collection(mesh.faces.ToArray());
 
-                // append mesh to blocktable record - necessary before adding vertices and faces
-                using (var blockTable = transaction.GetObject(doc.Database.BlockTableId, _OdDb.OpenMode.ForRead) as _OdDb.BlockTable)
-                {
-                    using (var btr = transaction.GetObject(blockTable[_OdDb.BlockTableRecord.ModelSpace], _OdDb.OpenMode.ForWrite) as _OdDb.BlockTableRecord)
-                    {
-
-                        btr.AppendEntity(_mesh);
-                        transaction.AddNewlyCreatedDBObject(_mesh, true);
-
-                        // add polyfacemesh vertices
-                        for (int i = 0; i < vertices.Count; i++)
-                        {
-                            var vertex = new _OdDb.PolyFaceMeshVertex(points[i]);
-                            if (mesh.colors.Count > 0)
-                            {
-                                try
-                                {
-                                    Color color = Color.FromArgb(mesh.colors[i]);
-                                    vertex.Color = _OdCm.Color.FromRgb(color.R, color.G, color.B);
-                                }
-                                catch { }
-                            }
-                            if (vertex.IsNewObject)
-                            {
-                                _mesh.AppendVertex(vertex);
-                                transaction.AddNewlyCreatedDBObject(vertex, true);
-                            }
-                        }
-
-                        // add polyfacemesh faces. vertex index starts at 1 sigh
-                        int j = 0;
-                        while (j < mesh.faces.Count)
-                        {
-                            _OdDb.FaceRecord face;
-                            if (mesh.faces[j] == 3) // triangle
-                            {
-                                face = new _OdDb.FaceRecord((short)(mesh.faces[j + 1] + 1), (short)(mesh.faces[j + 2] + 1), (short)(mesh.faces[j + 3] + 1), 0);
-                                j += 4;
-                            }
-                            else // quad
-                            {
-                                face = new _OdDb.FaceRecord((short)(mesh.faces[j + 1] + 1), (short)(mesh.faces[j + 2] + 1), (short)(mesh.faces[j + 3] + 1), (short)(mesh.faces[j + 4] + 1));
-                                j += 5;
-                            }
-
-                            if (face.IsNewObject)
-                            {
-                                _mesh.AppendFaceRecord(face);
-                                transaction.AddNewlyCreatedDBObject(face, true);
-                            }
-
-                        }
-                    }
-                }
-                transaction.Commit();
-            }
-
+            _OdDb.SubDMesh _mesh = new _OdDb.SubDMesh();
+            _mesh.SetSubDMesh(vertices, faceArray, 0);
             return _mesh;
         }
+
 
 
         public _OdGe.Point3d PointToNative(Point point)
